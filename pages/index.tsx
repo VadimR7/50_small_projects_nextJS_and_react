@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import ModalWindow from '../components/ModalWindow';
+import staticData from '../data.js';
 import {
   Nav,
   Main,
@@ -37,7 +38,7 @@ export default function Home({ projects }: Props): JSX.Element {
   const [errorMsgIsDisplayed, setErrorMsgIsDisplayed] = useState(false);
 
   useEffect(() => {
-    setDevelopmentMode(initMode);
+    setDevelopmentMode(false);
   }, []);
 
   const handleShowModal = () => setModalIsDisplayed(true);
@@ -149,14 +150,21 @@ export default function Home({ projects }: Props): JSX.Element {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const getProjects = async () => {
-    const response = await fetch('http://localhost:3004/projects');
-    const projects = await response.json();
-    return projects;
-  };
-  const projects = await getProjects();
+  if (env === 'development') {
+    const getProjects = async () => {
+      const response = await fetch('http://localhost:3004/projects');
+      const projects = await response.json();
+      return projects;
+    };
+    const projects = await getProjects();
+    return {
+      props: { projects },
+    };
+  }
+
+  const staticProjects = staticData.projects;
 
   return {
-    props: { projects },
+    props: { staticProjects },
   };
 };
