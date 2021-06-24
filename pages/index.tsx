@@ -162,9 +162,9 @@ export const getStaticProps: GetStaticProps = async () => {
     };
   }
 
-  const staticProjects = staticData.projects;
+  const { projects } = staticData;
 
   return {
-    props: { staticProjects },
+    props: { projects },
   };
 };
