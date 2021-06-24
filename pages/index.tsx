@@ -38,7 +38,7 @@ export default function Home({ projects }: Props): JSX.Element {
   const [errorMsgIsDisplayed, setErrorMsgIsDisplayed] = useState(false);
 
   useEffect(() => {
-    setDevelopmentMode(false);
+    setDevelopmentMode(initMode);
   }, []);
 
   const handleShowModal = () => setModalIsDisplayed(true);
